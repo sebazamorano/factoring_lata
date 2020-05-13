@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('razon_social')->nullable();
             $table->string('rut')->unique();
             $table->string('email')->unique();
-            $table->string('direccion');
-            $table->unsignedBigInteger('ciudad_id');
+            $table->string('direccion')->nullable();
+            $table->unsignedBigInteger('ciudad_id')->nullable();
             $table->integer('codigo_postal')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
