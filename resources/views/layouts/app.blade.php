@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- Icons -->
-    <link href="{{ asset('css/argon.min.css.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/argon.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="{{ asset('css/argon-dashboard.css') }}" rel="stylesheet" />
@@ -47,7 +47,7 @@
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="media align-items-center">
 							<span class="avatar avatar-sm rounded-circle">
-								<img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
+								<img alt="Image placeholder" src="{{asset('img/theme/team-1-800x800.jpg')}}">
 							</span>
                             </div>
                         </a>
@@ -110,17 +110,32 @@
                     </form>
                     <!-- Navigation -->
                     <ul class="navbar-nav">
-                        <li class="nav-item  active">
-                        <a class=" nav-link active " href=" ./index.html"> <i class="ni ni-tv-2 text-primary"></i> Inicio
-                        </a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="./examples/mis-ofertas.html">
+                            <a class=" nav-link" href="{{ route('home') }}"> <i class="ni ni-tv-2 text-primary"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="#">
                                 <i class="ni ni-planet text-blue"></i> Mis Ofertas
                             </a>
                         </li>
+                        <li class="nav-item @if(request()->routeIs('clientes*')) active @endif">
+                            <a class="nav-link @if(request()->routeIs('clientes*')) active @endif" href="{{ route('clientes.index') }}">
+                                <i class="ni ni-planet text-blue"></i> Clientes
+                            </a>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('ejecutivos*')) active @endif">
+                            <a class="nav-link @if(request()->routeIs('ejecutivos*')) active @endif" href="{{ route('ejecutivos.index') }}">
+                                <i class="ni ni-planet text-blue"></i> Ejecutivos
+                            </a>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('administradores*')) active @endif">
+                            <a class="nav-link @if(request()->routeIs('administradores*')) active @endif" href="{{ route('administradores.index') }}">
+                                <i class="ni ni-pin-3 text-orange"></i> Administradores
+                            </a>
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="./examples/cotiza.html">
+                            <a class="nav-link " href="{{ route('cotiza') }}">
                                 <i class="ni ni-pin-3 text-orange"></i> Cotizar
                             </a>
                         </li>
@@ -210,5 +225,7 @@
     <!--   Argon JS   -->
     <script src="{{'js/argon.js'}}"></script>
     <script src="{{'js/argon-dashboard.js'}}"></script>
+
+    @yield('script')
 </body>
 </html>

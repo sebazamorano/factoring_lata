@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ciudad extends Model
 {
-    protected $table = 'ciudades';
+    protected $table = 'comunas';
 
     protected $fillable = [
-        'nombre', 'region_id'
+        'nombre', 'region_id', 'provincia_id'
     ];
 
-    public function region()
+    public function provincia ()
     {
-        return $this->belongsTo(Region::class, 'region_id', 'id');
+        return $this->belongsTo(Provincia::class, 'provincia_id', 'id');
     }
 }

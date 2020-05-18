@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class Usuario extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRolesAndAbilities;
 
     protected $table = 'usuarios';
 
@@ -21,7 +22,7 @@ class Usuario extends Authenticatable
         'nombre', 'email', 'password',
         'apodo', 'apellido', 'razon_social',
         'rut', 'direccion', 'ciudad_id',
-        'codigo_postal',
+        'codigo_postal', 'sexo'
     ];
 
     /**
@@ -46,4 +47,34 @@ class Usuario extends Authenticatable
     {
         return $this->belongsTo(Ciudad::class, 'ciudad_id');
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->nombre . ' ' . $this->apellido;
+    }
+
+    public function scopeCliente($query)
+    {
+        $query->whereIs('cliente');
+    }
+
+    public function scopeEjecutivo($query)
+    {
+        $query->whereIs('ejecutivo');
+    }
+
+    public function scopeEvaluador($query)
+    {
+        $query->whereIs('evaluador');
+    }
+
+    public function scopeAdmin($query)
+    {
+        $query->whereIs('admin');
+    }
+
+
+
+
+
 }

@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "sasco/libredte": "dev-master",
-        "sasco/libredte-sdk-php": "^1.1"
+        "sasco/libredte-sdk-php": "^1.1",
+        "silber/bouncer": "v1.0.0-rc.8"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",

@@ -10,6 +10,11 @@ class Region extends Model
 
     public function ciudades()
     {
-        return $this->hasMany(Ciudad::class, 'region_id', 'id');
+        return $this->hasManyThrough(Provincia::class, Ciudad::class, 'provincia_id', 'region_id');
+    }
+
+    public function provincias ()
+    {
+        return $this->hasMany(Provincia::class, 'region_id', 'id');
     }
 }

@@ -20,7 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/mis-ofertas', 'HomeController@index')->name('mis-ofertas');
+Route::get('/cotiza', 'HomeController@cotiza')->name('cotiza');
+Route::get('/profile', 'ProfileController@index')->name('profile.index');
+Route::resource('/clientes', 'ClienteController');
+Route::resource('/ejecutivos', 'EjecutivoController');
+Route::resource('/administradores', 'AdministradorController');
 
 Route::get('/xml', function () {
     $xml = file_get_contents(storage_path('app/DTE_76160781_33_5188.xml'));
