@@ -7,6 +7,9 @@
     <title>
         Factoring Cloud - Geros
     </title>
+    @if (auth()->check())
+        <meta name="token" content="{{ auth()->user()->api_token }}">
+    @endif
     <!-- Favicon -->
     <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">
     <!-- Fonts -->
@@ -16,6 +19,7 @@
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="{{ asset('css/argon-dashboard.css') }}" rel="stylesheet" />
+    <link href="{{ asset('nucleo/css/nucleo.css') }}" rel="stylesheet" />
     @yield('css')
 </head>
 <body>
@@ -115,33 +119,42 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="#">
+                            <a class="nav-link " href="{{ route('mis-ofertas') }}">
                                 <i class="ni ni-planet text-blue"></i> Mis Ofertas
                             </a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('clientes*')) active @endif">
                             <a class="nav-link @if(request()->routeIs('clientes*')) active @endif" href="{{ route('clientes.index') }}">
-                                <i class="ni ni-planet text-blue"></i> Clientes
+                                <i class="ni ni-single-02 text-blue"></i> Usuarios
                             </a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('ejecutivos*')) active @endif">
                             <a class="nav-link @if(request()->routeIs('ejecutivos*')) active @endif" href="{{ route('ejecutivos.index') }}">
-                                <i class="ni ni-planet text-blue"></i> Ejecutivos
+                                <i class="ni ni-single-02 text-orange"></i> Ejecutivos
                             </a>
                         </li>
+                        @can('view-admin')
                         <li class="nav-item @if(request()->routeIs('administradores*')) active @endif">
                             <a class="nav-link @if(request()->routeIs('administradores*')) active @endif" href="{{ route('administradores.index') }}">
-                                <i class="ni ni-pin-3 text-orange"></i> Administradores
+                                <i class="ni ni-single-02 text-yellow"></i> Administradores
                             </a>
                         </li>
+                        @endcan
+                        @can('view-factory')
+                        <li class="nav-item @if(request()->routeIs('factories*')) active @endif">
+                            <a class="nav-link @if(request()->routeIs('factories*')) active @endif" href="{{ route('factories.index') }}">
+                                <i class="ni ni-single-02 text-yellow"></i> Factories
+                            </a>
+                        </li>
+                        @endcan
                         <li class="nav-item">
                             <a class="nav-link " href="{{ route('cotiza') }}">
                                 <i class="ni ni-pin-3 text-orange"></i> Cotizar
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="./examples/operaciones.html">
-                                <i class="ni ni-single-02 text-yellow"></i> Operaciones
+                            <a class="nav-link " href="#">
+                                <i class="fa fa-chart-bar text-purple"></i> Operaciones
                             </a>
                         </li>
                     </ul>
@@ -163,7 +176,7 @@
 									<img alt="Image placeholder" src="{{ asset('img/theme/team-4-800x800.jpg') }}">
 								</span>
                                     <div class="media-body ml-2 d-none d-lg-block">
-                                        <span class="mb-0 text-sm  font-weight-bold">Lata Digital Spa</span>
+                                        <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->fullName }}</span>
                                     </div>
                                 </div>
                             </a>
@@ -176,10 +189,17 @@
                                     <span>Mi Cuenta</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#!" class="dropdown-item">
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                                     <i class="ni ni-user-run"></i>
-                                    <span>Logout</span>
+                                    {{ __('Logout') }}
                                 </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -223,8 +243,8 @@
     <script src="./assets/js/plugins/chart.js/dist/Chart.min.js"></script>
     <script src="./assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
     <!--   Argon JS   -->
-    <script src="{{'js/argon.js'}}"></script>
-    <script src="{{'js/argon-dashboard.js'}}"></script>
+    <script src="{{asset('js/argon.js')}}"></script>
+    <script src="{{asset('js/argon-dashboard.js')}}"></script>
 
     @yield('script')
 </body>

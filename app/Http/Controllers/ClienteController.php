@@ -28,8 +28,9 @@ class ClienteController extends Controller
     public function create()
     {
         $regiones = Region::with('ciudades')->get();
+        $ejecutivos = Usuario::ejecutivo()->get();
 
-        return view('clientes.create', compact('regiones'));
+        return view('clientes.create', compact('regiones', 'ejecutivos'));
     }
 
     /**

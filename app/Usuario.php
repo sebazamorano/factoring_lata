@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class Usuario extends Authenticatable
 {
-    use Notifiable, HasRolesAndAbilities;
+    use Notifiable, HasRolesAndAbilities, SoftDeletes;
 
     protected $table = 'usuarios';
 
@@ -43,9 +45,28 @@ class Usuario extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = [
+        'deleted_at'
+    ];
+
     public function ciudad()
     {
-        return $this->belongsTo(Ciudad::class, 'ciudad_id');
+        return $this->belongsTo(Comuna::class, 'ciudad_id');
+    }
+
+    public function factory()
+    {
+        return $this->belongsTo(Factory::class, 'factory_id', 'id');
+    }
+
+    public function clientes()
+    {
+        return $this->belongsToMany(Usuario::class, 'clientes_ejecutivos', 'cliente_id', 'ejecutivo_id');
+    }
+
+    public function configuracion()
+    {
+        return $this->hasOne(ConfiguracionOperacion::class, 'cliente_id');
     }
 
     public function getFullNameAttribute()

@@ -20,6 +20,18 @@ class CreateRegionesTable extends Migration
             $table->string('capital');
             $table->timestamps();
         });
+
+        Schema::create('provincias', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->unsignedBigInteger('region_id');
+            $table->timestamps();
+
+            $table->foreign('region_id')
+                ->references('id')
+                ->on('regiones')
+                ->onDelete('cascade');
+        });
     }
 
     /**

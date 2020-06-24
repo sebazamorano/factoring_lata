@@ -18,6 +18,8 @@
 
 */
 
+@import '~sweetalert2/src/sweetalert2';
+
 // Core
 @import "argon-dashboard/custom/functions";
 @import "argon-dashboard/custom/variables";
@@ -58,6 +60,18 @@
 @import "argon-dashboard/bootstrap/utilities";
 @import "argon-dashboard/bootstrap/print";
 
+// Spinners
+
+$spinner-width:         2rem !default;
+$spinner-height:        $spinner-width !default;
+$spinner-border-width:  .25em !default;
+
+$spinner-width-sm:        1rem !default;
+$spinner-height-sm:       $spinner-width-sm !default;
+$spinner-border-width-sm: .2em !default;
+
+@import "~bootstrap/scss/spinners";
+
 // Argon utilities and components
 
 @import "argon-dashboard/custom/reboot";
@@ -78,7 +92,5 @@
 @import "argon-dashboard/docs/content";
 @import "argon-dashboard/docs/sidebar";
 @import "argon-dashboard/docs/footer";
-
-
 
 

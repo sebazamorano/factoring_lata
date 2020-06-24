@@ -13,17 +13,16 @@ class CreateCiudadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ciudades', function (Blueprint $table) {
+        Schema::create('comunas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('provincia_id');
             $table->timestamps();
 
-            $table->foreign('region_id')
+            $table->foreign('provincia_id')
                 ->references('id')
-                ->on('regiones')
-                ->onDelete('cascade');;
-
+                ->on('provincias')
+                ->onDelete('cascade');
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Region;
 use App\Usuario;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,8 @@ class EjecutivoController extends Controller
      */
     public function create()
     {
-        //
+        $regiones = Region::all();
+        return view('ejecutivos.create', compact('regiones'));
     }
 
     /**
@@ -59,7 +61,10 @@ class EjecutivoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ejecutivo = Usuario::with(['ciudad.provincia.region'])->findOrFail($id);
+        $regiones = Region::all();
+
+        return response()->view('ejecutivos.edit', compact('ejecutivo', 'regiones'));
     }
 
     /**

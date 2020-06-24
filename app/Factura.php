@@ -39,12 +39,12 @@ class Factura extends Model
 
     public function emisor()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id', 'id');
+        return $this->belongsTo(Usuario::class, 'empresa_emisora_id', 'id');
     }
 
     public function receptor()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id', 'id');
+        return $this->belongsTo(Usuario::class, 'empresa_receptora_id', 'id');
     }
 
     public function detalles()

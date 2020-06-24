@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ciudad extends Model
+class Comuna extends Model
 {
     protected $table = 'comunas';
 
