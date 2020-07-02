@@ -35,23 +35,20 @@
         data () {
             return {
                 facturas: [
-                    {
-                        rut_emisor: '',
-                        rut_receptor: '',
-                        monto_factura: 0,
-                        folio: 0,
-                        fecha: '2020-02-01'
-                    }
                 ],
                 form: new FormData(),
                 templateFact: {
                     rut_emisor: '',
                     rut_receptor: '',
-                    monto_factura: 0,
-                    folio: 0,
-                    fecha: '2020-02-01'
+                    monto_factura: null,
+                    folio: null,
+                    fecha: moment().format('L')
                 }
             }
+        },
+
+        mounted () {
+            this.facturas.push(this.templateFact);
         },
 
         methods:{

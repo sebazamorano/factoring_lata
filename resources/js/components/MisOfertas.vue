@@ -557,6 +557,10 @@
                         for (let f of this.facturas) {
                             f['total_descuento'] = f.monto_total * this.conf.porc_anticipo;
                             f['no_financiado'] = f['monto_total'] - f['total_descuento'];
+                            f['pago_mensual'] = (this.conf.porc_interes / 30) * f['no_financiado'] * 58;
+                            f['gasto_notificacion'] = this.conf.notificacion_facturas;
+                            f['gastos_fijos'] = this.conf.gasto_operacion;
+
                         }
                     });
             }
@@ -564,7 +568,6 @@
 
         watch: {
             num_docs (value) {
-                console.log(value);
                 this.total_facturas = _.sumBy(value, 'total');
                 this.giros = _.sumBy(value, 'giros');
             }

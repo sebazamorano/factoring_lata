@@ -26,8 +26,9 @@
         <div class="col-lg-2">
             <ValidationProvider rules="required" vid="monto" v-slot="{ errors, classes }">
             <div class="form-group" :class="(errors.length)?'has-danger':''">
-                <label class="form-control-label" for="input-monto">Monto Factura</label>
-                <input name="monto" type="number" v-model="factura.monto" id="input-monto" class="form-control form-control-alternative" placeholder="13.000.444">
+                <label class="form-control-label" for="monto_factura">Monto Factura</label>
+                <input name="monto_factura" type="number" v-model.number="factura.monto_factura" id="monto_factura"
+                       class="form-control form-control-alternative" placeholder="13.000.444">
                 <small class="form-text text-muted text-red">{{ errors.toString() }}</small>
             </div>
             </ValidationProvider>
@@ -44,7 +45,7 @@
         <div class="col-lg-3">
             <ValidationProvider rules="required" vid="fecha" v-slot="{ errors, classes }">
             <div class="form-group">
-                <label class="form-control-label" for="input-fecha">Fecha</label>
+                <label class="form-control-label" for="input-fecha">Fecha Vencimiento</label>
                 <input name="fecha" class="form-control" id="input-fecha" v-model="factura.fecha" placeholder="Fecha de vencimiento" type="date">
             </div>
             </ValidationProvider>

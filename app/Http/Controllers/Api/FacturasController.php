@@ -42,7 +42,31 @@ class FacturasController extends Controller
 
         foreach ($facturas as $factura) {
             $factura->usuario_id = Auth::user()->id;
-            Factura::create((array)$factura);
+
+            $emisor = Usuario::firstOrCreate([
+                'rut' => $factura->rut_emisor
+            ], [
+                'rut' => $factura->rut_emisor
+            ]);
+            $emisor->assign('empresa');
+
+            $receptor = Usuario::firstOrCreate([
+                'rut' => $factura->rut_receptor
+            ], [
+                'rut' => $factura->rut_receptor
+            ]);
+            $receptor->assign('empresa');
+
+            $factura = new Factura([
+                'usuario_id' => Auth::user()->id,
+                'empresa_emisora_id' => $emisor->id,
+                'empresa_receptora_id' => $receptor->id,
+                'folio' => $factura->folio,
+                'monto_total' => $factura->monto_factura,
+                'fecha_vencimiento' => $factura->fecha
+            ]);
+
+            $factura->save();
         }
 
         if ($request->hasFile('documento')) {

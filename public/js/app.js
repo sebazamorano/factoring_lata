@@ -2892,22 +2892,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      facturas: [{
-        rut_emisor: '',
-        rut_receptor: '',
-        monto_factura: 0,
-        folio: 0,
-        fecha: '2020-02-01'
-      }],
+      facturas: [],
       form: new FormData(),
       templateFact: {
         rut_emisor: '',
         rut_receptor: '',
-        monto_factura: 0,
-        folio: 0,
-        fecha: '2020-02-01'
+        monto_factura: null,
+        folio: null,
+        fecha: moment().format('L')
       }
     };
+  },
+  mounted: function mounted() {
+    this.facturas.push(this.templateFact);
   },
   methods: {
     addFactura: function addFactura() {
@@ -3988,6 +3985,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['factura'],
   methods: {}
@@ -4572,6 +4570,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             var f = _step.value;
             f['total_descuento'] = f.monto_total * _this.conf.porc_anticipo;
             f['no_financiado'] = f['monto_total'] - f['total_descuento'];
+            f['pago_mensual'] = _this.conf.porc_interes / 30 * f['no_financiado'] * 58;
+            f['gasto_notificacion'] = _this.conf.notificacion_facturas;
+            f['gastos_fijos'] = _this.conf.gasto_operacion;
           }
         } catch (err) {
           _iterator.e(err);
@@ -4583,7 +4584,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   watch: {
     num_docs: function num_docs(value) {
-      console.log(value);
       this.total_facturas = _.sumBy(value, 'total');
       this.giros = _.sumBy(value, 'giros');
     }
@@ -79106,7 +79106,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "form-control-label",
-                          attrs: { for: "input-monto" }
+                          attrs: { for: "monto_factura" }
                         },
                         [_vm._v("Monto Factura")]
                       ),
@@ -79115,25 +79115,33 @@ var render = function() {
                         directives: [
                           {
                             name: "model",
-                            rawName: "v-model",
-                            value: _vm.factura.monto,
-                            expression: "factura.monto"
+                            rawName: "v-model.number",
+                            value: _vm.factura.monto_factura,
+                            expression: "factura.monto_factura",
+                            modifiers: { number: true }
                           }
                         ],
                         staticClass: "form-control form-control-alternative",
                         attrs: {
-                          name: "monto",
+                          name: "monto_factura",
                           type: "number",
-                          id: "input-monto",
+                          id: "monto_factura",
                           placeholder: "13.000.444"
                         },
-                        domProps: { value: _vm.factura.monto },
+                        domProps: { value: _vm.factura.monto_factura },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.factura, "monto", $event.target.value)
+                            _vm.$set(
+                              _vm.factura,
+                              "monto_factura",
+                              _vm._n($event.target.value)
+                            )
+                          },
+                          blur: function($event) {
+                            return _vm.$forceUpdate()
                           }
                         }
                       }),
@@ -79246,7 +79254,7 @@ var render = function() {
                         staticClass: "form-control-label",
                         attrs: { for: "input-fecha" }
                       },
-                      [_vm._v("Fecha")]
+                      [_vm._v("Fecha Vencimiento")]
                     ),
                     _vm._v(" "),
                     _c("input", {
